@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 
+#define OMP_NUM_THREADS 1
+
 int main() {
   long N;
 
@@ -35,7 +37,7 @@ int main() {
   printf("Approximation of Pi: %lf\n", pi_approximation);
   printf("Time taken: %lf seconds\n", elapsed_time);
 
-  printf("\nCalculate Pi with OpenMP Parralel \n");
+  printf("\nCalculate Pi with OpenMP %d Threads Parralel \n", OMP_NUM_THREADS);
 
   pi_approximation = 0.0;
   start_time = clock();
@@ -56,6 +58,5 @@ int main() {
 
   printf("Approximation of Pi: %lf\n", pi_approximation);
   printf("Time taken: %lf seconds\n", elapsed_time);
-
   return 0;
 }
