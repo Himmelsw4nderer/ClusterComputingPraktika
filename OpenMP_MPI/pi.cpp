@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "mpi.h"
-
 int main() {
   long N;
 
