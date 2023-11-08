@@ -8,27 +8,39 @@ int main(int argc, char **argv) {
 
   double h = 1.0 / N;
   double pi_approximation = 0.0;
+ 
 
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
-  printf("Calculate Pi not Parralel \n");
-
-  clock_t start_time = clock();
-  for (int i = 0; i < N; i++) {
-    double x = (i + 0.5) * h;
-    double fx = 4.0 / (1.0 + x * x);
-    pi_approximation += fx;
+  if (rank == 0) {
+    printf("Calculate Pi with MPI %d Threads Parralel \n", num_procs);
   }
 
-  pi_approximation *= h;  // Multiply by the width of each subinterval
+  int chunkSize = N / num_procs;
+  int chunkStart = rank * chunkSize;
+  double local_pi_approximation = 0.0;
 
-  // End timing
+  int chunkEnd = chunkStart + chunkSize;
+  clock_t start_time = clock();
+  for (int i = chunkStart; i < chunkEnd; i++) {
+    double x = (i + 0.5) * h;
+    double fx = 4.0 / (1.0 + x * x);
+    local_pi_approximation += fx;
+  }
+
+  MPI_Reduce(&local_pi_approximation, &pi_approximation, 1, MPI_DOUBLE, MPI_SUM,
+             0, MPI_COMM_WORLD);
+
   clock_t end_time = clock();
 
   // Calculate the elapsed time in seconds
   double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+  if (rank == 0) {
+    printf("Approximation of Pi: %lf\n", pi_approximation *= h);
+    printf("Time taken: %lf seconds\n", elapsed_time);
+  }
 
-  printf("Approximation of Pi: %lf\n", pi_approximation);
-  printf("Time taken: %lf seconds\n", elapsed_time);
+  MPI_Finalize();
+}
