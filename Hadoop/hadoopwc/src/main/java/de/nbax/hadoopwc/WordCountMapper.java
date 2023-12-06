@@ -1,4 +1,4 @@
-package hadoopwc.src.main.java.de.nbax.hadoopwc;
+package src.main.java.de.nbax.hadoopwc;
 
 import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;
