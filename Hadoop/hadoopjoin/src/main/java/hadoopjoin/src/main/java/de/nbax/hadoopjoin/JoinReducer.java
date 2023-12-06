@@ -23,14 +23,10 @@ public class JoinReducer extends Reducer<Text, Text, Text, Text> {
             }
         }
 
-        for (Text value : values) {
-            context.write(key, value);
-        }
-
         // Perform the natural join
         for (String a : tableAValues) {
             for (String b : tableBValues) {
-                //context.write(key, new Text(a + "|" + b));
+                context.write(key, new Text(a + "|" + b));
             }
         }
     }

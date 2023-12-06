@@ -1,3 +1,5 @@
-hadoopjoin/src/main/java/de/nbax/hadoopjoin/JoinMapper.class
+hadoopjoin/src/main/java/de/nbax/hadoopjoin/JoinMapperA.class
 hadoopjoin/src/main/java/de/nbax/hadoopjoin/JoinReducer.class
+hadoopjoin/src/main/java/de/nbax/hadoopjoin/JoinMapper.class
+hadoopjoin/src/main/java/de/nbax/hadoopjoin/JoinMapperB.class
 hadoopjoin/src/main/java/de/nbax/hadoopjoin/JoinDriver.class
