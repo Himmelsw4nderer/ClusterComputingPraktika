@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management</title>
+  </head>
+  <body>
+    <h1>Student List</h1>
+    <ul>
+      {% for student in students %}
+      <li>{{ student }}</li>
+      {% endfor %}
+    </ul>
+
+    <h2>Add Student</h2>
+    <form method="post" action="{{ url_for('add_student') }}">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+      <button type="submit">Add</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,3 @@
+hadoopwc/src/main/java/de/nbax/hadoopwc/WordCountDriver.class
+hadoopwc/src/main/java/de/nbax/hadoopwc/WordCountMapper.class
+hadoopwc/src/main/java/de/nbax/hadoopwc/WordCountReducer.class
