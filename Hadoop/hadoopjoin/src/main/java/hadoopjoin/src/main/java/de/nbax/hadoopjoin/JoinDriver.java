@@ -17,8 +17,8 @@ public class JoinDriver {
         job.setOutputValueClass(Text.class);
 
         // Input paths for tableA.csv and tableB.csv
-        MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, JoinMapper.class);
-        MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, JoinMapper.class);
+        MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, JoinMapperA.class);
+        MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, JoinMapperB.class);
         FileOutputFormat.setOutputPath(job, new Path(args[2]));
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
