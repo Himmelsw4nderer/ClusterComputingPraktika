@@ -4,7 +4,7 @@
   <groupId>de.nbax</groupId>
   <artifactId>hadoopjoin</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.6W</version>
+  <version>1.0.7</version>
   <name>hadoopjoin</name>
   <url>http://maven.apache.org</url>
   <dependencies>
