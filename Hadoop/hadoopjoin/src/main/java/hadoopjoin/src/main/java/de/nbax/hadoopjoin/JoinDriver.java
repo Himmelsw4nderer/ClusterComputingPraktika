@@ -13,27 +13,18 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class JoinDriver {
-    public static class ProductMapper
+    public static class TableMapper
             extends Mapper<Object, Text, Text, Text> {
         public void map(Object key, Text value, Context context)
                 throws IOException, InterruptedException {
             String record = value.toString();
             String[] parts = record.split("\\|");
+            int joinindex = parts.length > 10 ? 2 : 0;
+            String joinprefix = parts.length > 10 ? "A" : "B";
             if (parts.length > 4) {
-                context.write(new Text(parts[2]), new Text("PROD|" + parts[1] + '|' +
+                context.write(new Text(parts[joinindex]), new Text(joinprefix + "|" + parts[1] + '|' +
                         parts[5]));
             }
-        }
-    }
-
-    public static class SupplierMapper
-            extends Mapper<Object, Text, Text, Text> {
-        public void map(Object key, Text value, Context context)
-                throws IOException, InterruptedException {
-            String record = value.toString();
-            String[] parts = record.split("\\|");
-            context.write(new Text(parts[0]), new Text("SUPP|" + parts[1] + '|' + parts[5] +
-                    '|' + parts[8]));
         }
     }
 
@@ -45,9 +36,9 @@ public class JoinDriver {
             ArrayList<String> supp = new ArrayList<String>();
             for (Text t : values) {
                 String parts[] = t.toString().split("\\|");
-                if (parts[0].equals("PROD")) {
+                if (parts[0].equals("A")) {
                     prod.add(parts[1] + '|' + parts[2]);
-                } else if (parts[0].equals("SUPP")) {
+                } else if (parts[0].equals("B")) {
                     supp.add(parts[1] + '|' + parts[2] + '|' + parts[3]);
                 }
             }
@@ -67,9 +58,9 @@ public class JoinDriver {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class,
-                ProductMapper.class);
+                TableMapper.class);
         MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class,
-                SupplierMapper.class);
+                TableMapper.class);
         FileOutputFormat.setOutputPath(job, new Path(args[2]));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
