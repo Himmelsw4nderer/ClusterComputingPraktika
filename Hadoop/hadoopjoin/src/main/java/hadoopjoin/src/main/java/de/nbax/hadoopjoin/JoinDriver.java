@@ -19,10 +19,8 @@ public class JoinDriver {
                 throws IOException, InterruptedException {
             String record = value.toString();
             String[] parts = record.split("\\|");
-            int joinindex = parts.length > 10 ? 2 : 0;
-            String joinprefix = parts.length > 10 ? "A" : "B";
             if (parts.length > 4) {
-                context.write(new Text(parts[joinindex]), new Text(joinprefix + "|" + parts[1] + '|' +
+                context.write(new Text(parts[2]), new Text("A|" + parts[1] + '|' +
                         parts[5]));
             }
         }
